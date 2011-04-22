@@ -49,7 +49,7 @@ if __name__ == "__main__":
         options = sys.argv[2:]
         rec = '-r' in options or '-recursive' in options
         verb = '-v' in options or '-verbose' in options
-        for opt in list(set(options) - set(['-r', '-recursive', '-v', '-verbose'])):
+        for opt in list(set(options) - set(['-r', '--recursive', '-v', '--verbose'])):
             print '!! Option "'+opt+'" not recognized.'
     except:
         print
@@ -60,8 +60,11 @@ if __name__ == "__main__":
         print "  python mp3dur.py path [-OPTION]"
         print
         print "OPTIONS:"
-        print "  -r(ecursive)   recursively for subfolders"
-        print "  -v(erbose)     print searched folders"
+        print "  -r, --recursive"
+        print "             search subfolders recursively"
+        print
+        print "  -v, --verbose"
+        print "             print name of searched folders"
         print
         exit(0)
     if os.path.isdir(path):
