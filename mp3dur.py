@@ -13,29 +13,27 @@ def get_play_time(path):
 
 def list_files(root_path='.', pattern='*', recursive=False, verbose=False):
     def _add_dir():
+        tot = 0
         matches = fnmatch.filter(files, pattern)
-        if verbose: print '  '+root+' ('+str(len(matches))+' files)'
+        if verbose: print '  '+root,
         for filename in matches:
             path = os.path.join(root, filename)
-            if os.path.isfile(path): fs.append(path)
-    fs = []
+            if os.path.isfile(path):
+                tot += get_play_time(path)
+        if verbose: print ' ('+str(len(matches))+' files, '+format_time(tot)+')'
+        return tot
+    time = 0
     if verbose: print 'Searching folders:'
     if recursive:
         for root, dirs, files in os.walk(root_path):
-            _add_dir()
+            time += _add_dir()
     else:
         files = os.listdir(root_path)
         root = root_path
-        _add_dir()
-    return fs
+        time += _add_dir()
+    return time
 
-def read_file_durations(files):
-    seconds = 0
-    for f in files:
-        seconds += get_play_time(f)
-    return seconds
-
-def format_seconds(secs):
+def format_time(secs):
     hours = secs/3600
     mins = (secs-hours*3600)/60
     secs = secs%60
@@ -53,10 +51,10 @@ if __name__ == "__main__":
             print '!! Option "'+opt+'" not recognized.'
     except:
         print
-        print "About:"
+        print "ABOUT:"
         print "  Script for listing durations of all MP3 files in a folder."
         print
-        print "Usage:"
+        print "USAGE:"
         print "  python mp3dur.py path [-OPTION]"
         print
         print "OPTIONS:"
@@ -68,9 +66,8 @@ if __name__ == "__main__":
         print
         exit(0)
     if os.path.isdir(path):
-        files = list_files(path, '*.mp3', recursive=rec, verbose=verb)
-        secs = read_file_durations(files)
+        secs = list_files(path, '*.mp3', recursive=rec, verbose=verb)
         print 'Total playtime:'
-        print '  '+format_seconds(secs)
+        print '  '+format_time(secs)
     else:
         print '!! provided directory "'+path+'" not found.'
