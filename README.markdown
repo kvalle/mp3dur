@@ -1,7 +1,7 @@
 mp3dur
 ------
 
-Script for listing durations of all MP3 files in a folder.
+Script for listing durations of all MP3 files in a folder.  Requires the `eyeD3` module.
 
 ### Usage
 
@@ -14,4 +14,4 @@ Script for listing durations of all MP3 files in a folder.
     
     -v, --verbose
         print name of searched folders
-
+        
