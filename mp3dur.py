@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import sys
 import eyeD3
 import fnmatch

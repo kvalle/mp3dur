@@ -6,6 +6,8 @@ Script for listing durations of all MP3 files in a folder.  Requires the `eyeD3`
 ### Usage
 
     python mp3dur.py path [-OPTION]
+    
+    ./mp3dur.py path [-OPTION]
 
 ### Options
 
