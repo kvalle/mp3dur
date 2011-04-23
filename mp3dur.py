@@ -43,34 +43,37 @@ def format_time(secs):
     secs = secs%60
     return str(hours)+'h'+str(mins)+'m'+str(secs)+'s'
 
+def print_help():
+    print
+    print "ABOUT:"
+    print color("  Script for listing durations of all MP3 files in a folder.", 'bright')
+    print
+    print "USAGE:"
+    print color("  python mp3dur.py path [-OPTION]", 'bright')
+    print
+    print "OPTIONS:"
+    print color("  -r, --recursive", 'bright')
+    print "             search subfolders recursively"
+    print
+    print color("  -v, --verbose", 'bright')
+    print "             print name of searched folders"
+    print
+
 if __name__ == "__main__":
     rec = False
     verb = False
     try:
         path = sys.argv[1]
         options = sys.argv[2:]
-        rec = '-r' in options or '-recursive' in options
-        verb = '-v' in options or '-verbose' in options
-        err_opts = list(set(options) - set(['-r', '--recursive', '-v', '--verbose']))
+        rec = '-r' in options or '--recursive' in options
+        verb = '-v' in options or '--verbose' in options
+        err_opts = list(set(options) - set(['-r', '--recursive', '-v', '--verbose', '-h', '--help']))
         for opt in err_opts:
             print color('!! option "'+opt+'" not recognized.','red')
         if err_opts:
             exit(1)
     except:
-        print
-        print "ABOUT:"
-        print color("  Script for listing durations of all MP3 files in a folder.", 'bright')
-        print
-        print "USAGE:"
-        print color("  python mp3dur.py path [-OPTION]", 'bright')
-        print
-        print "OPTIONS:"
-        print color("  -r, --recursive", 'bright')
-        print "             search subfolders recursively"
-        print
-        print color("  -v, --verbose", 'bright')
-        print "             print name of searched folders"
-        print
+        print_help()
         exit(0)
     if os.path.isdir(path):
         secs = list_files(path, '*.mp3', recursive=rec, verbose=verb)
