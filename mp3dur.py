@@ -59,23 +59,23 @@ if __name__ == "__main__":
     except:
         print
         print "ABOUT:"
-        print color("  Script for listing durations of all MP3 files in a folder.", 'bright normal')
+        print color("  Script for listing durations of all MP3 files in a folder.", 'bright')
         print
         print "USAGE:"
-        print color("  python mp3dur.py path [-OPTION]", 'bright normal')
+        print color("  python mp3dur.py path [-OPTION]", 'bright')
         print
         print "OPTIONS:"
-        print color("  -r, --recursive", 'bright normal')
+        print color("  -r, --recursive", 'bright')
         print "             search subfolders recursively"
         print
-        print color("  -v, --verbose", 'bright normal')
+        print color("  -v, --verbose", 'bright')
         print "             print name of searched folders"
         print
         exit(0)
     if os.path.isdir(path):
         secs = list_files(path, '*.mp3', recursive=rec, verbose=verb)
         print 'Total playtime:'
-        print color('  '+format_time(secs), 'bright normal')
+        print color('  '+format_time(secs), 'bright')
     else:
         print color('!! directory "'+path+'" not found.', 'red')
         exit(1)
