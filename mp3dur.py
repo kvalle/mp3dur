@@ -3,6 +3,10 @@ import eyeD3
 import fnmatch
 import os
 
+def color(text, color):
+    cmap = {'red': '0;31', 'bright':'1;39'}
+    return "\33["+cmap[color]+"m"+text+"\33[0m"
+
 def get_play_time(path):
     if eyeD3.isMp3File(path):
         audioFile = eyeD3.Mp3AudioFile(path)
@@ -47,27 +51,31 @@ if __name__ == "__main__":
         options = sys.argv[2:]
         rec = '-r' in options or '-recursive' in options
         verb = '-v' in options or '-verbose' in options
-        for opt in list(set(options) - set(['-r', '--recursive', '-v', '--verbose'])):
-            print '!! Option "'+opt+'" not recognized.'
+        err_opts = list(set(options) - set(['-r', '--recursive', '-v', '--verbose']))
+        for opt in err_opts:
+            print color('!! option "'+opt+'" not recognized.','red')
+        if err_opts:
+            exit(1)
     except:
         print
         print "ABOUT:"
-        print "  Script for listing durations of all MP3 files in a folder."
+        print color("  Script for listing durations of all MP3 files in a folder.", 'bright normal')
         print
         print "USAGE:"
-        print "  python mp3dur.py path [-OPTION]"
+        print color("  python mp3dur.py path [-OPTION]", 'bright normal')
         print
         print "OPTIONS:"
-        print "  -r, --recursive"
+        print color("  -r, --recursive", 'bright normal')
         print "             search subfolders recursively"
         print
-        print "  -v, --verbose"
+        print color("  -v, --verbose", 'bright normal')
         print "             print name of searched folders"
         print
         exit(0)
     if os.path.isdir(path):
         secs = list_files(path, '*.mp3', recursive=rec, verbose=verb)
         print 'Total playtime:'
-        print '  '+format_time(secs)
+        print color('  '+format_time(secs), 'bright normal')
     else:
-        print '!! provided directory "'+path+'" not found.'
+        print color('!! directory "'+path+'" not found.', 'red')
+        exit(1)
